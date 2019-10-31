@@ -70,6 +70,10 @@ namespace MyVet.Web
 
             // cq clase q utilice el IuserHelper en el construtor le mando una instancia del USERHELPER
             services.AddScoped<IUserHelper, UserHelper>();
+            services.AddScoped<ICombosHelper, CombosHelper>();
+            services.AddScoped<IConverterHelper, ConverterHelper>();
+            services.AddScoped<IImageHelper, ImageHelper >();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
