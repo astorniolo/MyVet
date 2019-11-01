@@ -18,17 +18,18 @@ namespace MyVet.Web.Data.Entities
 
         [Display(Name = "Date*")]
         [Required(ErrorMessage = "The field {0} is mandatory.")]
-        [DataType(DataType.DateTime)]
-        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd HH:mm}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd HH:mm}")]
+        // [DataType(DataType.DateTime)]             [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd HH:mm}", ApplyFormatInEditMode = true)]
         // A las propiedades Date le vamos a tener que tener miedito porque se supone que es un 
-        //Date En la WEB por lo que la hora va aser diferente en funcion del pais donde estemos
-        //asiq c/vez q definamos unsa DATE le agregamos una DATELOCAL de lectura  arrastrando las mismas data anotations
+        // Date En la WEB por lo que la hora va aser diferente en funcion del pais donde estemos
+        // asiq c/vez q definamos unsa DATE le agregamos una DATELOCAL de lectura  arrastrando las mismas data anotations
         public DateTime Date { get; set; }
 
         public string Remarks { get; set; }
 
         [Display(Name = "Date*")]
-        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd HH:mm}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd HH:mm}")]
+        //[DisplayFormat(DataFormatString = "{0:yyyy/MM/dd HH:mm}", ApplyFormatInEditMode = true)]
         public DateTime DateLocal => Date.ToLocalTime();
 
         //Relaciones 
