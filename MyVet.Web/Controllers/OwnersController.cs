@@ -362,57 +362,42 @@ namespace MyVet.Web.Controllers
             return RedirectToAction($"{nameof(DetailsPet)}/{pet.Owner.Id}");
         }
 
-        // GET: Owners/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
+        
 
-            }
+        //// POST: Owners/Edit/5
+        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Edit(int id, [Bind("Id")] Owner owner)
+        //{
+        //    if (id != owner.Id)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var owner = await _context.Owners.FindAsync(id);
-            if (owner == null)
-            {
-                return NotFound();
-            }
-            return View(owner);
-        }
-
-        // POST: Owners/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id")] Owner owner)
-        {
-            if (id != owner.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(owner);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!OwnerExists(owner.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(owner);
-        }
+        //    if (ModelState.IsValid)
+        //    {
+        //        try
+        //        {
+        //            _context.Update(owner);
+        //            await _context.SaveChangesAsync();
+        //        }
+        //        catch (DbUpdateConcurrencyException)
+        //        {
+        //            if (!OwnerExists(owner.Id))
+        //            {
+        //                return NotFound();
+        //            }
+        //            else
+        //            {
+        //                throw;
+        //            }
+        //        }
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(owner);
+        //}
 
         // GET: Owners/Delete/5
         public async Task<IActionResult> Delete(int? id)
@@ -440,6 +425,58 @@ namespace MyVet.Web.Controllers
             _context.Owners.Remove(owner);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var owner = await _context.Owners
+                .Include(o => o.User)
+                .FirstOrDefaultAsync(o => o.Id == id.Value);
+            if (owner == null)
+            {
+                return NotFound();
+            }
+
+            var view = new EditUserViewModel
+            {
+                Address = owner.User.Address,
+                Document = owner.User.Document,
+                FirstName = owner.User.FirstName,
+                Id = owner.Id,
+                LastName = owner.User.LastName,
+                PhoneNumber = owner.User.PhoneNumber
+            };
+
+            return View(view);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(EditUserViewModel view)
+        {
+            if (ModelState.IsValid)
+            {
+                var owner = await _context.Owners
+                    .Include(o => o.User)
+                    .FirstOrDefaultAsync(o => o.Id == view.Id);
+
+                owner.User.Document = view.Document;
+                owner.User.FirstName = view.FirstName;
+                owner.User.LastName = view.LastName;
+                owner.User.Address = view.Address;
+                owner.User.PhoneNumber = view.PhoneNumber;
+
+                await _userHelper.UpdateUserAsync(owner.User);
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(view);
         }
 
 
