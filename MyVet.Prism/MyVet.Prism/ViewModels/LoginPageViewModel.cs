@@ -30,6 +30,10 @@ namespace MyVet.Prism.ViewModels
             _isEnabled = true;
             _navigationService = navigationService;
             _apiService = apiService;
+
+            //TODO: DELETE THIS LINES.................
+            Email = "jzuluaga55@hotmail.com";
+            Password = "123456";
         }
 
         //propiedades
