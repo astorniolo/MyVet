@@ -10,12 +10,14 @@ namespace MyVet.Prism.ViewModels
 {
     public class PetPageViewModel : ViewModelBase
     {
+        private readonly INavigationService _navigationService;
         private PetResponse _pet;
 
         public PetPageViewModel(
             INavigationService navigationService) :base(navigationService)
         {
-            Title = "Pet";  
+            Title = "Pet cder";
+            _navigationService = navigationService;
         }
         public PetResponse Pet
         {

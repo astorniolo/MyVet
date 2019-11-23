@@ -27,7 +27,7 @@ namespace MyVet.Prism.ViewModels
                 { "pet", this } // le mandamos el objeto  PetResponse todo el objeto .... tiene todas las propiedade de pet
             };
 
-            await _navigationService.NavigateAsync("PetPage");
+            await _navigationService.NavigateAsync("PetPage",parameters);
         }
     }
 }
