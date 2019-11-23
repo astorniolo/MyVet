@@ -11,6 +11,7 @@ namespace MyVet.Prism.ViewModels
 {
     public class PetsPageViewModel : ViewModelBase
     {
+        private readonly INavigationService _navigationService;
         private OwnerResponse _owner;
         private ObservableCollection<PetItemViewModel> _pets; // si hay cambios en la lista se relflejen en la xaml
 
@@ -19,6 +20,7 @@ namespace MyVet.Prism.ViewModels
             INavigationService navigationService): base(navigationService)
         {
             Title = "Pets";
+            _navigationService = navigationService;
         }
 
         public ObservableCollection<PetItemViewModel> Pets
@@ -34,7 +36,7 @@ namespace MyVet.Prism.ViewModels
                 _owner = parameters.GetValue<OwnerResponse>("owner");
                 Title = $"Pets of:{_owner.Fullname}";
                 Pets = new ObservableCollection<PetItemViewModel>(_owner.Pets.Select(
-                    p=>new PetItemViewModel
+                    p=>new PetItemViewModel(_navigationService)
                     {
                         Id = p.Id,
                         Born =p.Born,

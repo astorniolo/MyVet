@@ -21,6 +21,10 @@
                         <Frame 
                             CornerRadius="10"
                             Margin="0,0,0,5">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer
+                                            Command="{Binding SelectPetCommand}"></TapGestureRecognizer>
+                            </Frame.GestureRecognizers>
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
@@ -32,7 +36,7 @@
                                 <Image
                                 Grid.Column="0"
                                 Source="{Binding ImageURL}"               
-                                WidthRequest="100"/>
+                                WidthRequest="50"/>
                                 <!-- bindo con la imagen  y prima el width-->
                                 <Grid
                                 Grid.Column="1">
@@ -71,10 +75,6 @@
                                 <Image
                                     Grid.Column="2"
                                     Source="ic_chevron_right" >
-                                    <Image.GestureRecognizers>
-                                        <TapGestureRecognizer
-                                            Command="{Binding SelectPetCommand}"></TapGestureRecognizer>
-                                    </Image.GestureRecognizers>
                                 </Image>
                             </Grid>
                         </Frame>

@@ -23,9 +23,13 @@
             VerticalOptions="CenterAndExpand"
             IsRunning="{Binding IsRunning}"/>
         <Button
+            BorderRadius="23"
+            BackgroundColor="Navy"
             IsEnabled="{Binding IsEnable}"
             Command="{Binding LoginCommand}"
-            Text="Login"/>
+            HeightRequest="46"
+            Text="Login"
+            TextColor="White"/>    <!-- si quiero un boton totalmente redondo el heightreques tiene que ser el doble del border radius-->
     </StackLayout>
   
 </ContentPage>
