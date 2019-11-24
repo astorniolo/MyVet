@@ -75,7 +75,19 @@ namespace MyVet.Prism.ViewModels
             }
 
             IsRunning = true;
-            IsEnabled = false; //desabilito el boton  
+            IsEnabled = false; //desabilito el boton
+            
+            // aca revisamos si tenemos internet
+            var url = App.Current.Resources["UrlAPI"].ToString();
+            var connection = await _apiService.CheckConnection(url);
+            // si es falso= no hay coneccion y esto puede ser por dos cosas falla internet o falla azure(muy dificil)
+            if (!connection)
+            {
+                IsEnabled = true;
+                IsRunning = false;
+                await App.Current.MainPage.DisplayAlert("Error", "Check the internet connection.", "Accept");
+                return;
+            }
 
             var request = new TokenRequest
             {
@@ -85,7 +97,7 @@ namespace MyVet.Prism.ViewModels
 
             //CPNSUMIR SERVICIO
             // que necesitamos consumir  cual es la url dde vamos a consumir los servicios..... la traigo del dicionario de recursos
-            var url = App.Current.Resources["UrlAPI"].ToString();
+            //var url = App.Current.Resources["UrlAPI"].ToString();  //la obtuve arriba
             //el api service lo hicimos como clase e interfaz para poderlo inyectar...... asi que inyectemos... en el code behind del servicio  en app.xml.cs y inyectar en ctor
             // ahora que nec saber ....si ese man pudo....
             var response = await _apiService.GetTokenAsync(url, "Account", "/CreateToken", request); // url viene de recursos, prefijo controlador y reques qu cree recien
@@ -102,7 +114,7 @@ namespace MyVet.Prism.ViewModels
             }
             
             // deserealizar la respuesta... castear el obj
-            var token = (TokenResponse)response.Result;
+            var token = response.Result;
 
             // CONSUMIR EL OTRO  EL OWNER
             // antes de navegar consumir el owner la otra respuesta
@@ -118,7 +130,7 @@ namespace MyVet.Prism.ViewModels
                 return;
             }
 
-            var owner = (OwnerResponse)response2.Result;
+            var owner = response2.Result;
             var parameters = new NavigationParameters
             {
                 { "owner", owner }

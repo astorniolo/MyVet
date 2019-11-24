@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MyVet.Common.Models
 {
-    public class Response
+    public class Response<T> where T : class 
     {
         // esta calase me va a dar el estado de cdo yo consuma cualquiercosa en el api
 
@@ -12,7 +12,7 @@ namespace MyVet.Common.Models
 
         public string Message { get; set; } // es la explicacion de porque no pudo...
 
-        public object Result { get; set; } // es el resultado de la consulta...
+        public T Result { get; set; } // es el resultado de la consulta...
 
     }
 }
