@@ -2,9 +2,9 @@
 
 namespace MyVet.Prism.Views
 {
-    public partial class HistoriesPage : ContentPage
+    public partial class PetTabbedPage : TabbedPage
     {
-        public HistoriesPage()
+        public PetTabbedPage()
         {
             InitializeComponent();
         }

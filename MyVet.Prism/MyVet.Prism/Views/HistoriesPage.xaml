@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="http://prismlibrary.com"
              prism:ViewModelLocator.AutowireViewModel="True"
-             x:Class="MyVet.Prism.Views.HistriesPage"
+             x:Class="MyVet.Prism.Views.HistoriesPage"
+             IconImageSource="ic_list"
              Title="{Binding Title}">
 
     <StackLayout
@@ -13,7 +14,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="48"/>
+                <ColumnDefinition Width="48"/> <!--48 48 es el tamaño del chevroncito si lo editamos es de 48 pxl-->
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -32,6 +33,7 @@
                 Text="Description"/>
         </Grid>
         <ListView
+            HasUnevenRows="True"
             ItemsSource="{Binding Histories}">
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -47,6 +49,9 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
                             <Label 
